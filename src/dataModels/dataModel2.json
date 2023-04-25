@@ -1,0 +1,83 @@
+{
+    "name": "Statistics",
+    "fields": {
+        "a1": {
+            "label": "A1",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a2": {
+            "label": "A2",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a3": {
+            "label": "A3",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a4": {
+            "label": "A4",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a5": {
+            "label": "A5",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a6": {
+            "label": "A6",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a7": {
+            "label": "A7",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a8": {
+            "label": "A8",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a9": {
+            "label": "A9",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "a10": {
+            "label": "A10",
+            "type": "int",
+            "readOnly": false,
+            "calculate": null
+        },
+        "mean": {
+            "label": "Mean",
+            "type": "int",
+            "readOnly": true,
+            "calculate": "mean(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)"
+        },
+        "median": {
+            "label": "Median",
+            "type": "int",
+            "readOnly": true,
+            "calculate": "median(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)"
+        },
+        "standardDeviation": {
+            "label": "Standard Deviation",
+            "type": "int",
+            "readOnly": true,
+            "calculate": "standardDeviation(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)"
+        }
+    }
+}

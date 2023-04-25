@@ -1,0 +1,23 @@
+{
+    "name": "SHA256",
+    "fields": {
+        "x": {
+            "label": "X",
+            "type": "string",
+            "readOnly": false,
+            "calculate": null
+        },
+        "y": {
+            "label": "Y",
+            "type": "string",
+            "readOnly": false,
+            "calculate": null
+        },
+        "sha256": {
+            "label": "SHA256",
+            "type": "string",
+            "readOnly": true,
+            "calculate": "sha256(x + y)"
+        }
+    }
+}
