@@ -1,5 +1,5 @@
 {
-    "name": "Sum",
+    "name": "Multiply",
     "fields": {
         "x": {
             "label": "X",
@@ -16,10 +16,10 @@
             "calculate": null
         },
         "sum": {
-            "label": "Sum",
+            "label": "Multiply",
             "type": "int",
             "readOnly": true,
-            "calculate": "$x + $y"
+            "calculate": "$x * $y"
         }
     }
 }

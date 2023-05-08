@@ -7,6 +7,8 @@ export interface Field {
   type: FieldType;
   readOnly: boolean;
   value?: string;
+  defaultValue?: string;
+  utils?: string;
   calculate: CalculateExpression;
 }
 

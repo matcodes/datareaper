@@ -1,7 +1,6 @@
 import {View, Text, Button, StyleSheet} from 'react-native';
-import React from 'react';
-import {DataModel} from '../types';
-import {helperFunctions} from '../utils/helpers';
+import React, {useCallback, useMemo} from 'react';
+import {DataModel, Field} from '../types';
 import CustomInputComponent from './CustomInputComponent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
@@ -33,32 +32,32 @@ export default function DataModelComponent(props: Props) {
     });
   };
 
-  const getExpressionValue = (expression: string) => {
-    const fields = model.fields;
+  const getVariables = useCallback((fields: {[key: string]: Field}) => {
     const keys = Object.keys(fields);
 
-    let variables = '';
+    let _variables = '';
 
     keys.forEach(key => {
-      if (fields[key].calculate === null) {
+      const value = fields[key].value || fields[key].defaultValue;
+      if (value) {
         const getValue = () => {
-          if (fields[key].type === 'int') {
-            return model.fields[key].value || '0';
-          } else if (fields[key].type === 'string') {
-            return `'${model.fields[key].value || ''}'`;
+          if (fields[key].type === 'string') {
+            return `'${value || ''}'`;
           } else {
-            return '';
+            return value;
           }
         };
-        variables += `const ${key} = ${getValue()}; \n`;
+        _variables += `const $${key} = ${getValue()}; \n`;
       }
     });
 
-    return `
-      ${variables}
-      ${expression}
-    `;
-  };
+    return _variables;
+  }, []);
+
+  const variables = useMemo(() => {
+    const fields = model.fields;
+    return getVariables(fields);
+  }, [getVariables, model.fields]);
 
   const handleGoBack = () => {
     if (isProceeded) {
@@ -66,6 +65,27 @@ export default function DataModelComponent(props: Props) {
     } else {
       props.goBack();
     }
+  };
+
+  const handleCalculate = () => {
+    let _variables = String(variables);
+
+    setModel(prevModel => {
+      for (const key of Object.keys(prevModel.fields)) {
+        const field = prevModel.fields[key];
+        if (field.calculate) {
+          const helperUtils = field.utils || '';
+          // eslint-disable-next-line no-eval
+          const value = eval(helperUtils + _variables + field.calculate);
+          field.value = value?.toString() || '';
+          _variables += `const $${key} = ${field.value}; \n`;
+        }
+      }
+
+      return prevModel;
+    });
+
+    setIsProceeded(true);
   };
 
   const renderHeader = () => {
@@ -78,11 +98,7 @@ export default function DataModelComponent(props: Props) {
           <Text style={styles.titleText}>{model.name}</Text>
         </View>
         <View>
-          <Button
-            color={'black'}
-            onPress={() => setIsProceeded(true)}
-            title="Proceed"
-          />
+          <Button color={'black'} onPress={handleCalculate} title="Calculate" />
         </View>
       </View>
     );
@@ -94,17 +110,14 @@ export default function DataModelComponent(props: Props) {
       .map((key, index) => {
         const field = model.fields[key];
         const value =
-          field.calculate !== null
-            ? // eslint-disable-next-line no-eval
-              eval(
-                helperFunctions + getExpressionValue(field.calculate || ''),
-              )?.toString()
-            : field.value || (field.type === 'int' ? '0' : '');
+          field.value ||
+          field.defaultValue ||
+          (field.type === 'int' ? '0' : '');
         return (
-          <View key={index} style={styles.fieldWrapper}>
+          <View key={`${key}_${index}`} style={styles.fieldWrapper}>
             <CustomInputComponent
               label={field.label}
-              value={value}
+              value={String(value)}
               editable={!field.readOnly}
               multiline
               autoCapitalize="none"
@@ -130,7 +143,7 @@ export default function DataModelComponent(props: Props) {
         extraHeight={120}
         contentInsetAdjustmentBehavior="automatic">
         {renderScreen()}
-        <View style={styles.extraHeight} />
+        <View style={styles.spacing} />
       </KeyboardAwareScrollView>
     </View>
   );
@@ -157,7 +170,7 @@ const styles = StyleSheet.create({
   fieldWrapper: {
     padding: 5,
   },
-  extraHeight: {
+  spacing: {
     height: 200,
   },
 });

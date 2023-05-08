@@ -1,63 +1,73 @@
 {
-    "name": "Statistics",
+    "name": "Mean Median Mode",
     "fields": {
         "a1": {
             "label": "A1",
             "type": "int",
+            "defaultValue": 3,
             "readOnly": false,
             "calculate": null
         },
         "a2": {
             "label": "A2",
             "type": "int",
+            "defaultValue": 6,
             "readOnly": false,
             "calculate": null
         },
         "a3": {
             "label": "A3",
             "type": "int",
+            "defaultValue": 9,
             "readOnly": false,
             "calculate": null
         },
         "a4": {
             "label": "A4",
             "type": "int",
+            "defaultValue": 12,
             "readOnly": false,
             "calculate": null
         },
         "a5": {
             "label": "A5",
             "type": "int",
+            "defaultValue": 15,
             "readOnly": false,
             "calculate": null
         },
         "a6": {
             "label": "A6",
             "type": "int",
+            "defaultValue": 18,
             "readOnly": false,
             "calculate": null
         },
         "a7": {
             "label": "A7",
             "type": "int",
+            "defaultValue": 21,
             "readOnly": false,
             "calculate": null
         },
         "a8": {
             "label": "A8",
             "type": "int",
+            "defaultValue": 24,
             "readOnly": false,
             "calculate": null
         },
         "a9": {
             "label": "A9",
             "type": "int",
+            "defaultValue": 27,
             "readOnly": false,
             "calculate": null
         },
         "a10": {
             "label": "A10",
             "type": "int",
+            "defaultValue": 30,
             "readOnly": false,
             "calculate": null
         },
@@ -65,19 +75,20 @@
             "label": "Mean",
             "type": "int",
             "readOnly": true,
-            "calculate": "mean(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)"
+            "calculate": "[$a1, $a2, $a3, $a4, $a5, $a6, $a7, $a8, $a9, $a10].reduce((a, b) => a + b) / 5"
         },
         "median": {
             "label": "Median",
             "type": "int",
             "readOnly": true,
-            "calculate": "median(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)"
+            "utils": "function median(...n){n.sort((n,t)=>n-t);let t=Math.floor(n.length/2);return n.length%2==0?(n[t-1]+n[t])/2:n[t]}",
+            "calculate": "median($a1,$a2,$a3,$a4,$a5,$a6,$a7,$a8,$a9,$a10)"
         },
         "standardDeviation": {
             "label": "Standard Deviation",
             "type": "int",
             "readOnly": true,
-            "calculate": "standardDeviation(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)"
+            "calculate": "Math.sqrt([$a1, $a2, $a3, $a4, $a5].map(x => Math.pow(x - $mean, 2)).reduce((a, b) => a + b) / 5)"
         }
     }
 }

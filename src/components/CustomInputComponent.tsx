@@ -4,7 +4,6 @@ import React from 'react';
 interface Props {
   label?: string;
   value?: string;
-  defaultValue?: string;
   onChange?: (text: string) => void;
   onBlur?: () => void;
   onSubmitEditing?: () => void;
@@ -36,7 +35,6 @@ export default function CustomInputComponent(props: Props) {
           blurOnSubmit={false}
           multiline={props.multiline}
           keyboardType={props.keyboardType}
-          scrollEnabled={false}
         />
       </View>
     </View>

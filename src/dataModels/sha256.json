@@ -1,0 +1,26 @@
+{
+    "name": "SHA256",
+    "fields": {
+        "x": {
+            "label": "X",
+            "type": "string",
+            "defaultValue": "hello",
+            "readOnly": false,
+            "calculate": null
+        },
+        "y": {
+            "label": "Y",
+            "type": "string",
+            "defaultValue": "there!",
+            "readOnly": false,
+            "calculate": null
+        },
+        "sha256": {
+            "label": "SHA256",
+            "type": "string",
+            "readOnly": true,
+            "utils": "function sha256(r){if(''===r)return'';function $(r,$){return r>>>$|r<<32-$}for(var _,o,f=Math.pow,a=f(2,32),n='length',t='',h=[],e=8*r[n],i=sha256.h=sha256.h||[],c=sha256.k=sha256.k||[],s=c[n],u={},v=2;s<64;v++)if(!u[v]){for(_=0;_<313;_+=v)u[_]=v;i[s]=f(v,.5)*a|0,c[s++]=f(v,1/3)*a|0}for(r+='\\x80';r[n]%64-56;)r+='\\0';for(_=0;_<r[n];_++){if((o=r.charCodeAt(_))>>8)return;h[_>>2]|=o<<(3-_)%4*8}for(o=0,h[h[n]]=e/a|0,h[h[n]]=e;o<h[n];){var l=h.slice(o,o+=16),g=i;for(_=0,i=i.slice(0,8);_<64;_++){var k=l[_-15],x=l[_-2],d=i[0],p=i[4],w=i[7]+($(p,6)^$(p,11)^$(p,25))+(p&i[5]^~p&i[6])+c[_]+(l[_]=_<16?l[_]:l[_-16]+($(k,7)^$(k,18)^k>>>3)+l[_-7]+($(x,17)^$(x,19)^x>>>10)|0),A=($(d,2)^$(d,13)^$(d,22))+(d&i[1]^d&i[2]^i[1]&i[2]);(i=[w+A|0].concat(i))[4]=i[4]+w|0}for(_=0;_<8;_++)i[_]=i[_]+g[_]|0}for(_=0;_<8;_++)for(o=3;o+1;o--){var C=i[_]>>8*o&255;t+=(C<16?0:'')+C.toString(16)}return t}",
+            "calculate": "sha256($x + $y)"
+        }
+    }
+}
