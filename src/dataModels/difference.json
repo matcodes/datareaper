@@ -1,23 +1,25 @@
 {
-    "name": "SHA256",
+    "name": "Difference",
     "fields": {
         "x": {
             "label": "X",
-            "type": "string",
+            "type": "int",
+            "defaultValue": 15,
             "readOnly": false,
             "calculate": null
         },
         "y": {
             "label": "Y",
-            "type": "string",
+            "type": "int",
+            "defaultValue": 10,
             "readOnly": false,
             "calculate": null
         },
-        "sha256": {
-            "label": "SHA256",
-            "type": "string",
+        "sum": {
+            "label": "Difference",
+            "type": "int",
             "readOnly": true,
-            "calculate": "sha256(x + y)"
+            "calculate": "$x - $y"
         }
     }
 }

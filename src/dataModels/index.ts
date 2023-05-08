@@ -1,5 +1,13 @@
 import sumModel from './sum.json';
-import dataModel1 from './dataModel1.json';
-import dataModel2 from './dataModel2.json';
+import sha256Model from './sha256.json';
+import meanMedianMode from './mean_median_mode.json';
+import differenceModel from './difference.json';
+import multiplyModel from './multiply.json';
 
-export default [sumModel, dataModel1, dataModel2];
+export default [
+  sumModel,
+  differenceModel,
+  multiplyModel,
+  sha256Model,
+  meanMedianMode,
+];
